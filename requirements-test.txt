@@ -1,0 +1,11 @@
+apache-airflow
+wixflow
+pytest
+aiohttp
+requests
+boto3
+PyJWT
+pyspark
+Jinja2
+sqlparse
+setuptools

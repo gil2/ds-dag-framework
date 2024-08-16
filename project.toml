@@ -1,0 +1,6 @@
+[build]
+group_id = "com.wixpress.ds"
+artifact_id = "ds-dag"
+[python]
+base_container_image = "docker-repo.wixpress.com/com.wixpress.python3-tests-base:snapshot"
+tests_hook_file = 'tests.sh'
