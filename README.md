@@ -1,16 +1,16 @@
-# DS Dag Framework
+# DS DAG Framework
 
-The DS Dag Framework is Wix Data Science's framework for creating Airflow dags.
+The DS DAG Framework is Wix Data Science's framework for creating Airflow DAGs.
 
 It is particularly useful for the following cases:
-* Internal dags called by an orchestrator dag
-* Dags that run a model (or some other long external task such as Feature Store Dataset Generation), wait for it to finish, validate results, store the output in history and wide tables, and create events.
+* Internal DAGs called by an orchestrator dag
+* DAGs that run a model (or some other long external task such as Feature Store Dataset Generation), wait for it to finish, validate results, store the output in history and wide tables, and create events.
 
-## DS Dag Classes & Files
+## DS DAG Classes & Files
 
 The dags directory has the following classes and files:
 
-* [DSDagManager](https://github.com/wix-private/wix-data-dev/blob/master/ds/ds_dag/dags/ds_dag_manager.py) is a controller that creates the dags, and holds the SQL, Events and Doc creators, along with the config file and list of dags it created.
+* [DSDagManager](https://github.com/wix-private/wix-data-dev/blob/master/ds/ds_dag/dags/ds_dag_manager.py) is a controller that creates the DAGs, and holds the SQL, Events and Doc creators, along with the config file and list of dags it created.
 * [DSDag](https://github.com/wix-private/wix-data-dev/blob/master/ds/ds_dag/dags/dsdag.py) manages each dag. Use it to create the dag, its tasks, and its documentation.
 * [Orchestrator](https://github.com/wix-private/wix-data-dev/blob/master/ds/ds_dag/dags/orchestrator.py) manages each orchestrator.
 * [DocCreator](https://github.com/wix-private/wix-data-dev/blob/master/ds/ds_dag/dags/doc_creator.py) creates the documentation.
@@ -47,16 +47,16 @@ You can also add content to other sections when creating your dag.
 
 ## How to use
 
-To use the DS Dag Framework:
+To use the DS DAG Framework:
 1. Create your config object.
 2. Create a DS Dag Manager.
 3. Use that to create your DS Dags
 4. Create tasks in your DS Dags.
-5. Call the DS Dag Manager's finish_creating_dags method.
+5. Call the DS DAG Manager's finish_creating_dags method.
 
 For example:
 ```python
-# Create Airflow dags using the DS Dag Framework
+# Create Airflow DAG using the DS DAG Framework
 from ds_dag.dags.dag_constants import DagConfKeys
 from ds_dag.dags.ds_dag_manager import DSDagManager
 
@@ -81,10 +81,10 @@ my_config = {
     }
 }
 
-# Create a DS Dag Manager
+# Create a DS DAG Manager
 ds_dag_manager = DSDagManager(config=my_config)
 
-# Create your dags, and add tasks to them
+# Create your DAGs, and add tasks to them
 dag = ds_dag_manager.create_dag('my_dag_id_1')
 dag.new_task_create_table(sql='select msid, ts from my_table')
 dag.new_tasks_run_model()
@@ -95,7 +95,7 @@ dag.new_task_create_table(sql='select msid, ts from my_table_2')
 dag.new_tasks_run_model()
 dag.new_tasks_store_results(append_to_history=True, update_wt=True)
 
-# Call finish_creating_dags to finish creating the dags & documentation
+# Call finish_creating_dags to finish creating the DAGs & documentation
 ds_dag_manager.finish_creating_dags()
 ```
 
@@ -103,11 +103,11 @@ The above code will create two dags that each:
 1. Create a table from an sql
 2. Send that table as an input table to a model, trigger the model, wait for it to return, and validate that at least a certain percent (by default 99%) of the rows were returned by the model.
 3. Stores the results to a history table, and / or a wide table.
-4. Create the documentation for the dags
+4. Create the documentation for the DAGs
 
 
 ## Orchestrators
-Orchestrators are dags that run a pipeline of other dags.
+Orchestrators are dags that run a pipeline of other DAGs.
 
 To create an orchestrator, call ds_dag_manager's create_orchestrator() instead of its create_dag().
 
@@ -115,9 +115,9 @@ The orchestrator will then build a pipeline of the dags in the dags section of t
 
 To have one dag use another dag's output as its input, set its DagConfKeys.INPUT_DAG parameter.
 
-Put the orchestrators' configurations in section parallel to the dags.
+Put the orchestrators' configurations in section parallel to the DAGs.
 
-Here's the code from the previous example, but now with an orchestrator that will run the dags at 3:15 UTC every morning, using the first dag's output as the second dag's input.
+Here's the code from the previous example, but now with an orchestrator that will run the dags at 3:15 UTC every morning, using the first DAG's output as the second dag's input.
 
 ```python
 # Create Airflow dags using the DS Dag Framework
@@ -151,7 +151,7 @@ my_config = {
     }
 }
 
-# Create a DS Dag Manager
+# Create a DS DAG Manager
 ds_dag_manager = DSDagManager(config=my_config)
 
 # Create the orchestrator
