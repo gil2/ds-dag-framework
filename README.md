@@ -11,7 +11,7 @@ It is particularly useful for the following cases:
 The dags directory has the following classes and files:
 
 * [DSDagManager](https://github.com/wix-private/wix-data-dev/blob/master/ds/ds_dag/dags/ds_dag_manager.py) is a controller that creates the DAGs, and holds the SQL, Events and Doc creators, along with the config file and list of dags it created.
-* [DSDag](https://github.com/wix-private/wix-data-dev/blob/master/ds/ds_dag/dags/dsdag.py) manages each dag. Use it to create the dag, its tasks, and its documentation.
+* [DSDag](https://github.com/wix-private/wix-data-dev/blob/master/ds/ds_dag/dags/dsdag.py) manages each DAG. Use it to create the dag, its tasks, and its documentation.
 * [Orchestrator](https://github.com/wix-private/wix-data-dev/blob/master/ds/ds_dag/dags/orchestrator.py) manages each orchestrator.
 * [DocCreator](https://github.com/wix-private/wix-data-dev/blob/master/ds/ds_dag/dags/doc_creator.py) creates the documentation.
 * [doc.md](https://github.com/wix-private/wix-data-dev/blob/master/ds/ds_dag/dags/doc.md) has the template of the documentation.
